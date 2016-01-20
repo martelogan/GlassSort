@@ -2,21 +2,24 @@
 <html>
   <head>
     <title>GlassSort</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="background.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
   </head>
 
   <body>
     <div id="prompt">
-      <p>Enter a list of company names seperated by commas</p>
+      <p>Enter a list of company names separated by commas</p>
       <form class="search">
         <textarea name="query" id="query" cols="50" rows="3"></textarea><br>
-        <input type="submit" value="Submit">
+        <input class ="sort" type="submit" value="Submit">
       </form>
     </div>
     <div id ="display">
+      <h2> Results </h2>
       <ol class="companies"></ol>
     </div>
-    <a href='https://www.glassdoor.com/index.htm'>powered by <img src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
+    <br>
+    <a href='https://www.glassdoor.com/index.htm' target="_blank">powered by <img src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="background.js"></script>
   </body>
 </html>

@@ -102,10 +102,12 @@ var showResults = function (query) {
     ).then(function(companies) {
         glassSort(companies);
         $('#prompt').hide();
+        $('#display').show();
         for (i = 0; i < companies.length; i++) {
           cur = companies[i];
           el = $('<li></li>');
           el.append($("<a>", {href: cur.url, target: "_blank"}).text(cur.name));
+          el.append("  (" + cur.overallRating.toFixed(1) + ")");
           $('#display>.companies').append(el);
         }
     });
