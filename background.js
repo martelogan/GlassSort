@@ -1,7 +1,11 @@
 $(document).ready(function() {
-    var query, metric;
-    $("form.search").submit(function() {
-      query = $('#query').val().split(',');
+    var query, metric, queryField, submitBtn, backBtn;
+    queryField = $('#query');
+    submitBtn = $("form.search");
+    backBtn = $('#backBtn');
+    queryField.focus();
+    submitBtn.submit(function() {
+      query = queryField.val().split(',');
       if(query.length == 0 || query[0] == '') {
         return false;
       }
@@ -9,7 +13,28 @@ $(document).ready(function() {
       showResults(query, metric);
       return false;
     });
+    $(document).keydown(function(e) {
+      if (e.which === 13) {
+        e.preventDefault();
+        submitBtn.submit();
+      }
+    });
+    $(document).keydown(function(e) {
+      if (e.which === 8 && backBtn.is(':visible')) {
+        e.preventDefault();
+        backBtn.click();
+      }
+    });
 });
+
+var download = function() {
+  var a = document.body.appendChild(
+      document.createElement("a")
+  );
+  a.download = "results.html";
+  a.href = "data:text/html," + document.getElementById("results").innerHTML;
+  a.click();
+}
 
 var getIp = function() {
   var promise = $.Deferred();
@@ -139,7 +164,7 @@ var showResults = function (query, metric) {
           el = $('<li></li>');
           el.append($("<a>", {href: cur.url, target: "_blank"}).text(cur.name));
           el.append("  (" + parseFloat(cur[""+ metric]).toFixed(1) + ")");
-          $('#display>.companies').append(el);
+          $('#results>.companies').append(el);
         }
         $('#display').show();
     });
