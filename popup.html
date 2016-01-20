@@ -10,7 +10,21 @@
       <p>Enter a list of company names separated by commas</p>
       <form class="search">
         <textarea name="query" id="query" cols="50" rows="3"></textarea><br>
-        <input class ="sort" type="submit" value="Submit">
+        <input class ="sort" type="submit" value="Sort by">
+        <select id="metric">
+          <option value="overallRating">Overall Rating</option>
+          <option value="workLifeBalanceRating">Work-Life Balance Rating</option>
+          <option value="cultureAndValuesRating">
+          Culture &amp Values Rating
+          </option>
+          <option value="compensationAndBenefitsRating">
+          Compensation &amp Benefits Rating
+          </option>
+          <option value="seniorLeadershipRating">Senior Leadership Rating</option>
+          <option value="careerOpportunitiesRating">
+          Career Opportunities Rating
+          </option>
+        </select>
       </form>
     </div>
     <div id ="display">
