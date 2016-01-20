@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>GlassSort</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
+
+  <body>
+    <div id="prompt">
+      <p>Enter a list of company names separated by commas</p>
+      <form class="search">
+        <textarea name="query" id="query" cols="50" rows="3"></textarea><br>
+        <input class ="sort" type="submit" value="Sort by">
+        <select id="metric">
+          <option value="overallRating">Overall Rating</option>
+          <option value="workLifeBalanceRating">Work-Life Balance Rating</option>
+          <option value="cultureAndValuesRating">
+          Culture &amp Values Rating
+          </option>
+          <option value="compensationAndBenefitsRating">
+          Compensation &amp Benefits Rating
+          </option>
+          <option value="seniorLeadershipRating">Senior Leadership Rating</option>
+          <option value="careerOpportunitiesRating">
+          Career Opportunities Rating
+          </option>
+        </select>
+      </form>
+    </div>
+    <div id ="display">
+      <div id="results">
+        <h2> Results </h2>
+        <ol class="companies"></ol>
+      </div>
+      <button id="backBtn" onclick="location.reload()">Back</button>
+      <button id="downloadBtn" onclick="download()">Download HTML</button>
+    </div>
+    <br>
+    <a href='https://www.glassdoor.com/index.htm' target="_blank">powered by <img src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="background.js"></script>
+  </body>
+</html>
