@@ -65,6 +65,32 @@ var getCompanies = function(url, query, params) {
   return promise;
 }
 
+var glassSort = function(companies) {
+  var head, body, tail;
+  head = "https://www.glassdoor.ca/Reviews/";
+  body = "-Reviews-E";
+  tail = ".htm";
+  
+  if(companies.length == 1) {
+    var a = companies[0];
+    a.url = head + a.name + body + a.id + tail;
+    return companies;
+  }
+
+  companies.sort(function(a, b){
+    a.url = head + a.name + body + a.id + tail;
+    b.url = head + b.name + body + b.id + tail;
+    if(a.overallRating > b.overallRating) {
+      return -1;
+    }
+    if(a.overallRating < b.overallRating) {
+      return 1;
+    }
+    return 0;
+  });
+  return companies;
+}
+
 var showResults = function (query) {
   var url, el, i, cur;
   url = "http://api.glassdoor.com/api/api.htm";
@@ -74,7 +100,14 @@ var showResults = function (query) {
     $.when(
       getCompanies(url, query, data)
     ).then(function(companies) {
-        console.log(companies);
+        glassSort(companies);
+        $('#prompt').hide();
+        for (i = 0; i < companies.length; i++) {
+          cur = companies[i];
+          el = $('<li></li>');
+          el.append($("<a>", {href: cur.url, target: "_blank"}).text(cur.name));
+          $('#display>.companies').append(el);
+        }
     });
   });
 }
