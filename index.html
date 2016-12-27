@@ -2,6 +2,10 @@
 <html>
   <head>
     <title>GlassSort</title>
+    <![if !IE]>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+    <![endif]>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
     <link rel="stylesheet" type="text/css" href="main.css">
   </head>
 
@@ -27,13 +31,25 @@
         </select>
       </form>
     </div>
+    <div id="loading">
+      <p>loading results...</p>
+      <div id="waitWarning">
+        <p>lots to process, this might take a while...</p>
+      </div>
+      <div id="waitApology">
+        <p>Wow, it's really taking a long time...GlassDoor might not be cooperating :S</p>
+      </div>
+    </div>
     <div id ="display">
       <div id="results">
         <h2> Results </h2>
+        <div id="noResults">
+          <p>Glassdoor isn't cooperating right now sorry. No results apparently : /</p>
+        </div>
         <ol class="companies"></ol>
       </div>
-      <button id="backBtn" onclick="location.reload()">Back</button>
-      <button id="downloadBtn" onclick="download()">Download HTML</button>
+      <button id="backBtn">Back</button>
+      <button id="downloadBtn">Download HTML</button>
     </div>
     <br>
     <a href='https://www.glassdoor.com/index.htm' target="_blank">powered by <img src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
@@ -41,7 +57,7 @@
     <br>
     <a href='http://loganmartel.me' target="_blank">produced by <img src='http://loganmartel.me/images/favicon.png' title='My Logo' />
     </a>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="background.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/background.js"></script>
   </body>
 </html>
