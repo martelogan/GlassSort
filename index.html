@@ -3,7 +3,7 @@
   <head>
     <title>GlassSort</title>
     <![if !IE]>
-    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+      <link rel="icon" href="images/favicon.png" type="image/x-icon" />
     <![endif]>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
     <link rel="stylesheet" type="text/css" href="main.css">
@@ -31,22 +31,29 @@
         </select>
       </form>
     </div>
-    <div id="loading">
+    <div id="loading" class="hidden">
       <p>loading results...</p>
-      <div id="waitWarning">
+      <div id="waitWarning" class="hidden">
         <p>lots to process, this might take a while...</p>
       </div>
-      <div id="waitApology">
+      <div id="waitApology" class="hidden">
         <p>Wow, it's really taking a long time...GlassDoor might not be cooperating :S</p>
+        <div id="reccomendAlternative" class="hidden">
+          <br>
+          <p>Try <a href="http://loganmartel.me/GlassSort" target="_blank">my web app</a> for faster (albeit less robust) queries</p>
+          <p><b>warning:</b> link will close this extension</p>
+        </div>
       </div>
     </div>
-    <div id ="display">
+    <div id ="display" class="hidden">
       <div id="results">
         <h2> Results </h2>
-        <div id="noResults">
+        <div id="noResults" style="display: none">
           <p>Glassdoor isn't cooperating right now sorry. No results apparently : /</p>
         </div>
         <ol class="companies"></ol>
+        <div id="failedRequests" style="display: none">
+        </div>
       </div>
       <button id="backBtn">Back</button>
       <button id="downloadBtn">Download HTML</button>

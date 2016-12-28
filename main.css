@@ -60,7 +60,11 @@ textarea {
   margin-bottom: 5px;
 }
 
-#loading {
+.hidden {
+  display: none;
+}
+
+/*#loading {
   display: none;
 }
 
@@ -78,4 +82,4 @@ textarea {
 
 #display {
   display: none;
-}
+}*/

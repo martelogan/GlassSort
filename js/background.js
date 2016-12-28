@@ -54,25 +54,27 @@ $(document).ready(function() {
         backBtn.click();
       }
     });
-    try { //chrome extension
-      // inject scraper script to find companies
-      chrome.tabs.executeScript(null, {
-        file: "js/jquery-3.1.1.min.js"
-      }, function() {
-        // If you try and inject into an extensions page or the webstore/NTP you'll get an error
-        if (chrome.extension.lastError) {
-          console.log('There was an error injecting script : \n' + chrome.extension.lastError.message);
-        }
-        else {
-          chrome.tabs.executeScript(null, {
-            file: "js/scraper.js"
-          });
-        }
-      });
+    if (glassSortExecutionIsChromeExtension) {
+      try { //chrome extension
+        // inject scraper script to find companies
+        chrome.tabs.executeScript(null, {
+          file: "js/jquery-3.1.1.min.js"
+        }, function() {
+          // If you try and inject into an extensions page or the webstore/NTP you'll get an error
+          if (chrome.extension.lastError) {
+            console.log('There was an error injecting script : \n' + chrome.extension.lastError.message);
+          }
+          else {
+            chrome.tabs.executeScript(null, {
+              file: "js/scraper.js"
+            });
+          }
+        });
     }
     catch(err) { // not a chrome extension
       glassSortExecutionIsChromeExtension = false;
     }
+  }
 });
 
 // automated saveAs HTML
@@ -169,7 +171,7 @@ if (glassSortExecutionIsChromeExtension) { // sequential (longer wait time)
           delay = 100;
           break;
       case 2:
-          delay = 500;
+          delay = 400;
           break;
       case 3:
           delay = 1000;
@@ -262,6 +264,8 @@ else { // asynchronous (prone to API blocking)
     // resolve promise when all requests are realized    
     $.when.apply($, deferreds).then(function() {
       promise.resolve(results);
+    }).catch(function(err) {
+      promise.reject(err);
     });
 
     return promise;
@@ -322,29 +326,47 @@ var glassSort = function(companies, metric) {
   return companies;
 }
 
+// show message if still loading
+var loadTimeMessage = function(divId) {
+  if(! $('#display').is(":visible")) {
+    $(divId).show();
+  }
+}
+// warn about long wait time
+var waitWarning = function() {
+  loadTimeMessage('#waitWarning');
+}
+// apologize for long wait time
+var waitApology = function() {
+  $('#waitWarning').hide();
+  loadTimeMessage('#waitApology');
+}
+// reccomend my hosted web app
+var reccomendAlternative = function() {
+  loadTimeMessage('#reccomendAlternative');
+}
+
 // display results of glassSorted companies
 var showResults = function (query, metric) {
-  var url, el, i, cur, len, allCompaniesSuccess, waitApology, originalPromise, secondChance, jsonFailed, getCompaniesFailed;
-  url = "http://api.glassdoor.com/api/api.htm";
-  $('#prompt').hide();
+  var url, el, i, cur, len, dataType, failedRequests, succRequests, allCompaniesSuccess, getCompaniesFailed, promise;
   // load time ux management
+  $('#prompt').hide();
   $('#loading').show();
-  if(glassSortExecutionIsChromeExtension) {
-    $('#waitWarning').delay(1500).show(0);
-  }
-  // apologize for long wait time
-  waitApology = function() {
-    $('#waitWarning').hide();
-    if(! $('#display').is(":visible")) {
-      $('#waitApology').show();
-    }
-  }
   setTimeout(waitApology, 15000);
-  allCompaniesSuccess = function(companies) { // final success callback
+  if(glassSortExecutionIsChromeExtension) {
+    setTimeout(waitWarning, 1700);
+    setTimeout(reccomendAlternative, 17000);
+  }
+  // construct parameters
+  url = "http://api.glassdoor.com/api/api.htm";
+  dataType = glassSortExecutionIsChromeExtension ? 'json' : 'jsonp';
+  // final success callback
+  allCompaniesSuccess = function(companies) {
     $('#loading').hide();
     // sort companies in-place by chosen metric
     glassSort(companies, metric);
     len = companies.length;
+    succRequests = 0;
     // iteratively append companies to displayed results
     for (i = 0; i < len; i++) {
       try {
@@ -353,38 +375,46 @@ var showResults = function (query, metric) {
         el.append($("<a>", {href: cur.url, target: "_blank"}).text(cur.name));
         el.append("  (" + parseFloat(cur[""+ metric]).toFixed(1) + ")");
         $('#results>.companies').append(el);
+        succRequests += 1;
       }
       catch(err) {
         continue;
       }
     }
+    failedRequests = query.length - succRequests;
     $('#display').show();
-    if (len == 0) {
+    if (len == 0 || failedRequests == len) {
       $('#noResults').show();
     }
+    else if(failedRequests > 0) {
+      var boldWarning, failedRequests_str;
+      boldWarning = "<b>Disclosure: </b>";
+      failedRequests_str = failedRequests > 1 ? failedRequests + " requests" : "One request";
+      failedRequests_str = failedRequests_str + " returned no results from Glassdoor."
+      el = $('<p></p>');
+      el.html(boldWarning + failedRequests_str);
+      $('#failedRequests').append(el);
+      $('#failedRequests').show();
+
+    }
   }
-  // promise for json attempt
-  originalPromise = $.Deferred();
-  // promise for jsonp attempt
-  secondChance = $.Deferred();
-  // error callback for json attempt
-  jsonFailed = function(XMLHttpRequest, textStatus, errorThrown) {
-    originalPromise.reject('try jsonp');
-    throw "try jsonp"
-  }
-  // error callback for jsonp attempt
+  // error callbacks
   getCompaniesFailed = function(XMLHttpRequest, textStatus, errorThrown) {
     console.log("ERROR: " + textStatus);
   }
+  // promise for getCompanies result
+  promise = $.Deferred();
   $.when(// Glassdoor API request payload is constructed
     getParams()
   ).then(function(data) {// attempt to get companies data as json
     $.when(
-      getCompaniesJSON(url, query, data, 'json', jsonFailed, originalPromise)
-    ).then(allCompaniesSuccess).catch(function(err) { // json failed
-      $.when( // attempt to get companies data as jsonp
-        getCompaniesJSON(url, query, data, 'jsonp', getCompaniesFailed, secondChance)
-      ).then(allCompaniesSuccess);
+      getCompaniesJSON(url, query, data, dataType, getCompaniesFailed, promise)
+    ).then(allCompaniesSuccess).catch(function(err) { // fatal error
+      console.log("Promise rejected (see exception object below): ");
+      console.log(err);
+      $('#loading').hide();
+      $('#display').show();
+      $('#noResults').show();
     });
   });
 }
