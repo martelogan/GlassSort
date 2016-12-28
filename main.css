@@ -60,6 +60,26 @@ textarea {
   margin-bottom: 5px;
 }
 
-#display {
+.hidden {
   display: none;
 }
+
+/*#loading {
+  display: none;
+}
+
+#waitWarning {
+  display: none;
+}
+
+#waitApology {
+  display: none;
+}
+
+#noResults {
+  display: none;
+}
+
+#display {
+  display: none;
+}*/
