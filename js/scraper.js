@@ -63,13 +63,28 @@ var treeWalkFast = (function() {
 // scrape company name strings from HTML
 var getCompanyNames = function(HTML) {
 
-  var results, companies, counter, curStr;
+  var url, results, companies, counter, curStr, indxCom;
+  // adapt scraping to active chrome tab
+  url = window.location.href;
+  if (url.includes("indeed.com")) {
+    console.log("Scraping: indeed.com");
+    companies = $('.row.result').find('span[class="company"]');
+  }
+  else if (url.includes("myfuture.mcgill.ca")) {
+    console.log("Scraping: myfuture.mcgill.ca");
+    companies = $('.list-data-columns').find('a[class="ListPrimaryLink"]');
+  }
   results = [];
-  companies = $('.row.result').find('span[class="company"]');
   seen = {};
+  // parse companies text to list
   if (companies.length > 0) { // companies are found
     companies.findDeepest().each( function() {
+      // trim whitespace at string boundaries
       curStr = $(this).text().trim();
+      // remove text following comma (inclusive)
+      indxCom = curStr.indexOf(',');
+      curStr = curStr.substring(0, indxCom != -1 ? indxCom : curStr.length);
+      // only add strings we have not yet seen
       if(seen[curStr] !== 1) {
         seen[curStr] = 1;
         results.push(curStr);

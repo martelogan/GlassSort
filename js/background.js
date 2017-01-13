@@ -10,7 +10,7 @@ try { // chrome extension execution
       query_str = queryField.text()
       if (companies.length > 0) { // companies found
         for(i = 0; i < companies.length - 1; i++) {
-          query_str += companies[i] + ', ';
+          query_str += companies[i] + ',';
         }
         query_str += companies[companies.length - 1];
       }
