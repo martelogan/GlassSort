@@ -74,6 +74,23 @@ var getCompanyNames = function(HTML) {
     console.log("Scraping: myfuture.mcgill.ca");
     companies = $('.list-data-columns').find('a[class="ListPrimaryLink"]');
   }
+  else if (url.includes("linkedin.com/jobs")) {
+    console.log("Scraping: linkedin.com/jobs");
+    companies = $('h4.job-card__company-name');
+  }
+  else if (url.includes("monster")) {
+    console.log("Scraping: monster");
+    companies = $('div.company');
+  }
+  else if (url.includes("simplyhired")) {
+    console.log("Scraping: simplyhired");
+    companies = $('.serp-subtitle').find('span[class="serp-company"][itemprop="name"]');
+  }
+  else if (url.includes("eluta")) {
+    console.log("Scraping: eluta");
+    companies = $('.organic-job').find('.employer.lk-employer');
+  }
+  
   results = [];
   seen = {};
   // parse companies text to list
