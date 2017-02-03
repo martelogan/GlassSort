@@ -19,7 +19,8 @@ try { // chrome extension execution
   });
 }
 catch(err) { // not a chrome extension
-  console.log("Executing outside extension environment.")
+  console.log("Executing outside extension environment.");
+  $('.content').addClass('webApp');
   glassSortExecutionIsChromeExtension = false;
 }
 
@@ -336,6 +337,10 @@ var loadTimeMessage = function(divId) {
 var waitWarning = function() {
   loadTimeMessage('#waitWarning');
 }
+// warn about clicking away
+var clickWarning = function() {
+  loadTimeMessage('#clickWarning');
+}
 // apologize for long wait time
 var waitApology = function() {
   $('#waitWarning').hide();
@@ -355,6 +360,7 @@ var showResults = function (query, metric) {
   setTimeout(waitApology, 15000);
   if(glassSortExecutionIsChromeExtension) {
     setTimeout(waitWarning, 1700);
+    setTimeout(clickWarning, 2700);
     setTimeout(reccomendAlternative, 17000);
   }
   // construct parameters
