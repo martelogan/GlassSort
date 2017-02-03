@@ -10,60 +10,69 @@
   </head>
 
   <body>
-    <div id="prompt">
-      <p>Enter a list of company names separated by commas</p>
-      <form class="search">
-        <textarea name="query" id="query" cols="50" rows="3"></textarea><br>
-        <input class ="sort" type="submit" value="Sort by">
-        <select id="metric">
-          <option value="overallRating">Overall Rating</option>
-          <option value="workLifeBalanceRating">Work-Life Balance Rating</option>
-          <option value="cultureAndValuesRating">
-          Culture &amp Values Rating
-          </option>
-          <option value="compensationAndBenefitsRating">
-          Compensation &amp Benefits Rating
-          </option>
-          <option value="seniorLeadershipRating">Senior Leadership Rating</option>
-          <option value="careerOpportunitiesRating">
-          Career Opportunities Rating
-          </option>
-        </select>
-      </form>
-    </div>
-    <div id="loading" class="hidden">
-      <p>loading results...</p>
-      <div id="waitWarning" class="hidden">
-        <p>lots to process, this might take a while...</p>
+    <div class="content">
+      <div id="logo_L">
+        <img src='images/logo_imgx500.png' title='logo' />
       </div>
-      <div id="waitApology" class="hidden">
-        <p>Wow, it's really taking a long time...GlassDoor might not be cooperating :S</p>
-        <div id="reccomendAlternative" class="hidden">
-          <br>
-          <p>Try <a href="http://loganmartel.me/GlassSort" target="_blank">my web app</a> for faster (albeit less robust) queries</p>
-          <p><b>warning:</b> link will close this extension</p>
+      <div id="prompt">
+        <p>Enter a list of company names separated by commas</p>
+        <form class="search">
+          <textarea name="query" id="query" cols="50" rows="3"></textarea><br>
+          <input class ="sort" type="submit" value="Sort by">
+          <select id="metric">
+            <option value="overallRating">Overall Rating</option>
+            <option value="workLifeBalanceRating">Work-Life Balance Rating</option>
+            <option value="cultureAndValuesRating">
+            Culture &amp Values Rating
+            </option>
+            <option value="compensationAndBenefitsRating">
+            Compensation &amp Benefits Rating
+            </option>
+            <option value="seniorLeadershipRating">Senior Leadership Rating</option>
+            <option value="careerOpportunitiesRating">
+            Career Opportunities Rating
+            </option>
+          </select>
+        </form>
+      </div>
+      <div id="loading" class="hidden">
+        <p>loading results...</p>
+        <div id="waitWarning" class="hidden">
+          <p>lots to process, this might take a while...</p>
+          <div id="clickWarning" class="hidden">
+            <br>
+            <p><b>warning:</b> clicking away will close this extension</p>
+          </div>
+        </div>
+        <div id="waitApology" class="hidden">
+          <p>Wow, it's really taking a long time...GlassDoor might not be cooperating :S</p>
+          <div id="reccomendAlternative" class="hidden">
+            <br>
+            <p>Try <a href="http://loganmartel.me/GlassSort" target="_blank">my web app</a> for faster (albeit less robust) queries</p>
+            <p><b>warning:</b> link will close this extension</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div id ="display" class="hidden">
-      <div id="results">
-        <h2> Results </h2>
-        <div id="noResults" style="display: none">
-          <p>Glassdoor isn't cooperating right now sorry. No results apparently : /</p>
+      <div id ="display" class="hidden">
+        <div id="results">
+          <h2> Results </h2>
+          <div id="noResults" style="display: none">
+            <p>Glassdoor isn't cooperating right now sorry. No results apparently : /</p>
+          </div>
+          <ol class="companies"></ol>
+          <div id="failedRequests" style="display: none">
+          </div>
         </div>
-        <ol class="companies"></ol>
-        <div id="failedRequests" style="display: none">
-        </div>
+        <button id="backBtn">Back</button>
+        <button id="downloadBtn">Download HTML</button>
       </div>
-      <button id="backBtn">Back</button>
-      <button id="downloadBtn">Download HTML</button>
+      <br>
+      <a href='https://www.glassdoor.com/index.htm' target="_blank">powered by <img src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
+      <br>
+      <br>
+      <a href='http://loganmartel.me' target="_blank">produced by <img src='http://loganmartel.me/images/favicon.png' title='Logan Martel' />
+      </a>
     </div>
-    <br>
-    <a href='https://www.glassdoor.com/index.htm' target="_blank">powered by <img src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
-    <br>
-    <br>
-    <a href='http://loganmartel.me' target="_blank">produced by <img src='http://loganmartel.me/images/favicon.png' title='My Logo' />
-    </a>
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/background.js"></script>
   </body>
