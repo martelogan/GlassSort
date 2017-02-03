@@ -4,6 +4,11 @@ body {
   color: #666;
 }
 
+img {
+  /*max-width: 100%;*/
+  max-width: 400px;
+}
+
 a, a:link {
     text-decoration: none;
     cursor: pointer;
@@ -62,6 +67,22 @@ textarea {
 
 .hidden {
   display: none;
+}
+
+.webApp {
+  position: fixed;
+  left: 50%;
+  width: auto;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+
+@media all and (max-width: 450px){
+  #logo_L { display: none; }
 }
 
 /*#loading {
