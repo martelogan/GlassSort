@@ -72,7 +72,12 @@ var getCompanyNames = function(HTML) {
   }
   else if (url.includes("myfuture.mcgill.ca")) {
     console.log("Scraping: myfuture.mcgill.ca");
-    companies = $('.list-data-columns').find('a[class="ListPrimaryLink"]');
+    if(url.includes("careerfairs")) {
+        companies = $('li.company').find('div[class="list-item-main"]').find('h2 > a[class="ng-binding"]');
+    }
+    else {
+        companies = $('.list-data-columns').find('a[class="ListPrimaryLink"]');
+    }
   }
   else if (url.includes("linkedin.com/jobs")) {
     console.log("Scraping: linkedin.com/jobs");
