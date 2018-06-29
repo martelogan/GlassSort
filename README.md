@@ -6,9 +6,12 @@ Chrome Extension to sort a list of companies by Glassdoor ratings.
 
 **Web app available:** [here](http://loganmartel.me/GlassSort/)
 
-## Citation
+License
+-------
 
-If you use or modify the GlassSort project, please credit the original author as
+This code is under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+If you use or modify _GlassSort_, please credit the original author as
 
 * Logan Martel - https://github.com/martelogan
 

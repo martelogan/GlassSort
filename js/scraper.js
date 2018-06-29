@@ -1,3 +1,20 @@
+/**
+ *
+ * @license Apache 2.0, https://www.apache.org/licenses/LICENSE-2.0
+ * @version 1.1.0.0
+ * @author  Logan Martel, https://github.com/martelogan
+ * @updated 2018-06-29
+ * @link    https://github.com/martelogan/GlassSort
+ *
+ *
+ */
+
+/**
+ *
+ * This script is injected to a user's active tab to scrape companies from job listings.
+ *
+ */
+
 $.fn.findDeepest = function() {
     var results = [];
     this.each(function() {

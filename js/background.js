@@ -1,3 +1,20 @@
+/**
+ *
+ * @license Apache 2.0, https://www.apache.org/licenses/LICENSE-2.0
+ * @version 1.1.0.0
+ * @author  Logan Martel, https://github.com/martelogan
+ * @updated 2018-06-29
+ * @link    https://github.com/martelogan/GlassSort
+ *
+ *
+ */
+
+/**
+ *
+ * This script orchestrates the GlassSort logic on loading the web app or extension DOM.
+ *
+ */
+
 // global variable to track execution environment
 glassSortExecutionIsChromeExtension = true;
 try { // chrome extension execution
