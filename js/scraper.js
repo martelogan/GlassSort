@@ -83,8 +83,8 @@ var getCompanyNames = function(HTML) {
   var url, results, companies, counter, curStr, indxCom;
   // adapt scraping to active chrome tab
   url = window.location.href;
-  if (url.includes("indeed.com")) {
-    console.log("Scraping: indeed.com");
+  if (url.includes("indeed.com") || url.includes("indeed.ca")) {
+    console.log("Scraping: indeed");
     companies = $('.row.result').find('span[class="company"]');
   }
   else if (url.includes("myfuture.mcgill.ca")) {
@@ -106,7 +106,7 @@ var getCompanyNames = function(HTML) {
   }
   else if (url.includes("simplyhired")) {
     console.log("Scraping: simplyhired");
-    companies = $('.serp-subtitle').find('span[class="serp-company"][itemprop="name"]');
+    companies = $('.card.js-job').find('span[class="jobposting-company"]');
   }
   else if (url.includes("eluta")) {
     console.log("Scraping: eluta");
